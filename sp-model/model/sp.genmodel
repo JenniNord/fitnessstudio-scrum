@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/sp-model/src-gen" creationIcons="false" editDirectory="/sp-model.edit/src-gen"
+    editorDirectory="/sp-model.editor/src-gen" modelPluginID="sp" modelName="SP" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>sp.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="SP" basePackage="sp.model" disposableProviderFactory="true"
+      ecorePackage="sp.ecore#/">
+    <genClasses ecoreClass="sp.ecore#//Stakeholder">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sp.ecore#//Stakeholder/workitem"/>
+    </genClasses>
+    <genClasses ecoreClass="sp.ecore#//Backlog">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sp.ecore#//Backlog/workitems"/>
+    </genClasses>
+    <genClasses ecoreClass="sp.ecore#//WorkItem">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sp.ecore#//WorkItem/isPlannedFor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sp.ecore#//WorkItem/Importance"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sp.ecore#//WorkItem/Effort"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sp.ecore#//WorkItem/stakeholder"/>
+    </genClasses>
+    <genClasses ecoreClass="sp.ecore#//Sprint">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sp.ecore#//Sprint/committedItem"/>
+    </genClasses>
+    <genClasses ecoreClass="sp.ecore#//Plan">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sp.ecore#//Plan/stakeholders"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sp.ecore#//Plan/backlog"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sp.ecore#//Plan/sprints"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
