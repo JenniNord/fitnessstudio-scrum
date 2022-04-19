@@ -64,7 +64,7 @@ public class SpreadCalculator {
 		
 		for (String initMethod : initMethods) {
 			for (String model : models) {
-				final String OUTPUT_PREFIX = "output_models\\" + model + "\\" + initMethod + "-fixedXORgen\\"; // either -fixed or -fixedXORgen
+				final String OUTPUT_PREFIX = "output_models\\" + model + "\\" + initMethod + "-fixed\\"; // either -fixed or -fixedXORgen
 				String paretoFrontFile = "resource\\ref" + model + ".csv";
 				
 				try (BufferedReader br = new BufferedReader(new FileReader(OUTPUT_PREFIX + "log.txt"))) {

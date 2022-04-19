@@ -53,12 +53,11 @@ public class SPConstraintChecker implements ConstraintChecker {
 			return true;
 		}
 		
-
-		// May not delete node other than SelectedArtifacts/Solutions
+		// May not delete node other than WorkItems/Sprints
 		if (createOrDeleteEdgesViolateConstraints(deletionNodes, preservedNodesLhs2Rhs))
 			return true;
 
-		// May not create node other than SelectedArtifacts/Solutions
+		// May not create node other than WorkItems/Sprints
 		if (createOrDeleteEdgesViolateConstraints(creationNodes, preservedNodesRhs2Lhs))
 			return true;
 
@@ -66,7 +65,7 @@ public class SPConstraintChecker implements ConstraintChecker {
 	}
 
 	/**
-	 * Changed line 89 for the SP problem
+	 * Changed line 88-89 for the SP problem
 	 * 
 	 * @author nielsvharten, JenniNord
 	 * @param nodes
@@ -86,7 +85,8 @@ public class SPConstraintChecker implements ConstraintChecker {
 				Node y1 = graph2graph.get(x1);
 				Node y2 = graph2graph.get(x2);
 				if (y1 != null && y2 != null && y1.getOutgoing(e.getType(), y2) == null)
-					if (e.getType() != SPPackage.eINSTANCE.getSprint_CommittedItem() && e.getType() != SPPackage.eINSTANCE.getWorkItem_IsPlannedFor())
+					if (e.getType() != SPPackage.eINSTANCE.getSprint_CommittedItem() && 
+						e.getType() != SPPackage.eINSTANCE.getWorkItem_IsPlannedFor())
 						return true;
 			}
 		}

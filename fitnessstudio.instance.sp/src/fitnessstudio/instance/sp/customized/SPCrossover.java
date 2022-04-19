@@ -91,10 +91,10 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 		}
 	}
 	
-	// TODO: move this somewhere? fix it
+	// TODO: move this somewhere?
 	private boolean workItemEquals(WorkItem wiA, WorkItem wiB) {
-		return (wiA.getEffort() == wiB.getEffort() 
-				&& wiA.getImportance() == wiB.getImportance() 
-				&& wiA.getStakeholder() == wiB.getStakeholder());
+		return ((wiA.getEffort() == wiB.getEffort()) && 
+				(wiA.getImportance() == wiB.getImportance()) && 
+				(wiA.getStakeholder() == wiB.getStakeholder()));
 	}
 }

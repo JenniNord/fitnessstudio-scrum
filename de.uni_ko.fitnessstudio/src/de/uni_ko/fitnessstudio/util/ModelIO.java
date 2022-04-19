@@ -41,13 +41,13 @@ public class ModelIO {
 		Module module = HenshinFactory.eINSTANCE.createModule();
 		module.getUnits().addAll(content);
 		HenshinResourceSet rs = new HenshinResourceSet();
-		rs.saveEObject(module, prefix +"\\"+ + iteration + "_rules_nrp" + (Math.round(cra * 10.0) / 10.0) + ".henshin");
+		rs.saveEObject(module, prefix +"\\"+ + iteration + "_rules_sp" + (Math.round(cra * 10.0) / 10.0) + ".henshin");
 	}
 	
 
 	public static void saveProducedModel(EObject cm, int runNo, double cra, String prefix) {
 		HenshinResourceSet rs = new HenshinResourceSet();
-		rs.saveEObject(cm, prefix + "run" +runNo + "_nrp" + (Math.round(cra * 100.0) / 100.0) + ".xmi");
+		rs.saveEObject(cm, prefix + "run" +runNo + "_sp" + (Math.round(cra * 100.0) / 100.0) + ".xmi");
 	}
 
 }

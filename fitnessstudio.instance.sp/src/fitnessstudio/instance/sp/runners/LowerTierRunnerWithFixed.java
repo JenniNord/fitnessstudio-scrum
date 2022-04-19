@@ -52,7 +52,7 @@ public class LowerTierRunnerWithFixed {
 	public static void main(String[] args) throws JMetalException, InterruptedException, FileNotFoundException {
 		SPPackage.eINSTANCE.eClass();
 		
-		List<String> models = Arrays.asList("A", "B", "C", "D", "E");
+		List<String> models = Arrays.asList("A");
 		for (String model : models) {
 			runWithModel(model);
 		}
@@ -85,6 +85,7 @@ public class LowerTierRunnerWithFixed {
 			gaManager.setPrefix(OUTPUT_PREFIX + i);
 			gaManager.runNSGAII();
 			
+			System.out.print("Pareto time");
 			
 			// Models pareto front
 			gaManager.getResult();
