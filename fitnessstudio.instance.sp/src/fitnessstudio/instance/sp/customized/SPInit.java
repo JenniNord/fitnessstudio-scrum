@@ -23,12 +23,20 @@ public class SPInit extends Init<SPSolution> {
 		this.problem = problem;
 		
 		List<SPSolution> population = new ArrayList<>(size);
-	    
-		createRandomPopulation(population, size);
+		
 		//createEmptyPopulation(population, size);
+	    
+		// 1:1 Sprints:WorkItems
+		createRandomPopulation(population, size);
 		//createCompletePopulation(population, size);
 		//createExtremesPopulation(population, size);
 		//createRandomWithExtremesPopulation(population, size);
+		
+		// Blob Sprint, 1 Sprint:All WI
+		//createRandomBlobPopulation(population, size);
+		//createCompleteBlobPopulation(population, size);
+		//createExtremesBlobPopulation(population, size);
+		//createRandomWithExtremesBlobPopulation(population, size);
 	    
 	    return population;
 	}
@@ -110,6 +118,80 @@ public class SPInit extends Init<SPSolution> {
 			
 			// add sprint to plan
 			plan.getSprints().add(sprint);
+		}
+		
+		return solution;
+	}
+	
+	private void createRandomBlobPopulation(List<SPSolution> population, int size) {
+		for (int i = 0; i < size; i++) {
+			population.add(createRandomBlobSolution());
+	    }
+	}
+	
+	private void createCompleteBlobPopulation(List<SPSolution> population, int size) {
+		for (int i = 0; i < size; i++) {
+			population.add(createCompleteBlobSolution());
+	    }
+	}
+	
+	private void createExtremesBlobPopulation(List<SPSolution> population, int size) {
+		for (int i = 0; i < size; i++) {
+			if (i % 2 == 0) {
+				population.add(createCompleteBlobSolution());
+			} else {
+				population.add(problem.createSolution());
+			}
+	    }
+	}
+	
+	private void createRandomWithExtremesBlobPopulation(List<SPSolution> population, int size) {
+		population.add(problem.createSolution());
+		
+		for (int i = 1; i < size - 1; i++) {
+			population.add(createRandomBlobSolution());
+	    }
+		
+		population.add(createCompleteBlobSolution());
+	}
+	
+	// some work items will get added to one sprint belonging to the plan
+	private SPSolution createRandomBlobSolution() {
+		SPSolution solution = problem.createSolution();
+		Plan plan = solution.getVariable(0);
+		
+		// create sprint
+		Sprint sprint = SPFactory.eINSTANCE.createSprint();
+		// add sprint to plan
+		plan.getSprints().add(sprint);
+		
+		for (int i = 0; i < plan.getBacklog().getWorkitems().size(); i++) {
+			if (Math.random() > 0.5) {
+				// add work item to sprint
+				WorkItem workitem = plan.getBacklog().getWorkitems().get(i);
+				workitem.setIsPlannedFor(plan.getSprints().get(0));
+				plan.getSprints().get(0).getCommittedItem().add(workitem);
+			}
+		}
+		
+		return solution;
+	}
+	
+	// all work items gets added to the same sprint in the plan
+	private SPSolution createCompleteBlobSolution() {
+		SPSolution solution = problem.createSolution();
+		Plan plan = solution.getVariable(0);
+		
+		// create sprint
+		Sprint sprint = SPFactory.eINSTANCE.createSprint();
+		// add sprint to plan
+		plan.getSprints().add(sprint);
+		
+		for (int i = 0; i < plan.getBacklog().getWorkitems().size(); i++) {
+			// add work item to sprint
+			WorkItem workitem = plan.getBacklog().getWorkitems().get(i);
+			workitem.setIsPlannedFor(plan.getSprints().get(0));
+			plan.getSprints().get(0).getCommittedItem().add(workitem);
 		}
 		
 		return solution;
