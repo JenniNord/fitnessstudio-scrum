@@ -36,11 +36,9 @@ public class MinimiseCustomerSatisfactionIndex {
             .mapToDouble(Double::doubleValue)
             .toArray();
 
-    double importanceStandardDeviation =
-        standardDeviationCalculator.evaluate(stakeholderImportanceSprintDeviation);
+    double importanceStandardDeviation = standardDeviationCalculator.evaluate(stakeholderImportanceSprintDeviation);
 
-    System.out.println(
-        "Sprint stakeholder importance distribution: " + stakeholderImportanceSprintDeviation);
+    System.out.println("Sprint stakeholder importance distribution: " + stakeholderImportanceSprintDeviation);
     System.out.println("Sprint Customer Satisfaction Index: " + importanceStandardDeviation);
 
     return importanceStandardDeviation;

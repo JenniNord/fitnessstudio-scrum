@@ -16,7 +16,8 @@ public class HasNoUnassignedWorkItems {
 
     System.out.println("Unassigned backlog work items: " + unassignedWorkItems);
 
-    return unassignedWorkItems;
+    // Negative numbers trigger constraint violations in JMetal
+    return unassignedWorkItems * -1;
   }
 
   public String getName() {

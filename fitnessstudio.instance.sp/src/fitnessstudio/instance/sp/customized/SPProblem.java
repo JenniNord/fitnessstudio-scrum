@@ -35,12 +35,13 @@ public class SPProblem extends DomainModelProblem<Plan> {
 	    Check.that(getNumberOfObjectives() == 2, "There must be 2 objectives instead of " + getNumberOfObjectives());
 	    Check.that(getNumberOfConstraints() == 2, "There must be 2 constraints instead of " + getNumberOfConstraints());
 	    
-	    // negative/positive? changed these
+	    // minimize = positive, maximize = negative
 		solution.setObjective(0, satisfaction.computeFitness(solution.getVariable(0)));
 		solution.setObjective(1, effort.computeFitness(solution.getVariable(0)));
 		
-		// TODO: add NumberOfViolatedConstraints?
-		solution.setConstraint(0, -assigned.computeFitness(solution.getVariable(0)));
+		// returns a negative value or 0
+		// 0 = no constraint violation
+		solution.setConstraint(0, assigned.computeFitness(solution.getVariable(0)));
 		solution.setConstraint(1, sprints.computeFitness(solution.getVariable(0)));
 	}
 

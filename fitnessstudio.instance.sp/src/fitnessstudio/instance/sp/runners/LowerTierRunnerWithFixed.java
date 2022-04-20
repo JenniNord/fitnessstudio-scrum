@@ -43,8 +43,8 @@ import fitnessstudio.instance.sp.customized.SPProblem;
 public class LowerTierRunnerWithFixed {
 	private static String MUTATION_RULES_DIRECTORY = "transformation\\fixed";
 
-	private static int RUNS = 30;//1;//
-	private static int MAX_EVALUATIONS = 5000;//150000;//
+	private static int RUNS = 1;//30;//
+	private static int MAX_EVALUATIONS = 500;//5000;150000;//
 	private static int POPULATION_SIZE = 40;//200;//
 	
 	private static GAConfiguration configuration = new GAConfiguration(MAX_EVALUATIONS, POPULATION_SIZE, true);

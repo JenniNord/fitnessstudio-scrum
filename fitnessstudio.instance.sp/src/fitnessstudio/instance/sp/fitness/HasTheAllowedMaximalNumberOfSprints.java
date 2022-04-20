@@ -32,8 +32,9 @@ public class HasTheAllowedMaximalNumberOfSprints {
     System.out.println("Counted maximal desired sprints: " + desiredSprints);
 
     // If we have less than the minimum number of desired sprints
+    // Negative numbers trigger constraint violations in JMetal
     if (nonEmptySprints > desiredSprints) {
-      return desiredSprints - nonEmptySprints;
+      return (desiredSprints - nonEmptySprints) * -1;
     }
 
     return 0;
