@@ -47,6 +47,7 @@ public class RuleSetFitness<S> implements Fitness<RuleSet, Double> {
 			DomainModelMutation<S> domainModelMutation = new DomainModelMutation<S>(chromosome.getGenRules(), 0.6);
 			return getResultWithTimeout(domainModelMutation);
 		} else {
+			System.out.println("Violates DomainNameConstraintChecker");
 			return -10000.0;
 		}
 	}
