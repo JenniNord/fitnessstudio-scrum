@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: NrpInstance
+Bundle-SymbolicName: fitnessstudio.instance.sp
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: lib/cra.ttc16_1.0.0.jar
+Require-Bundle: de.uni_ko.fitnessstudio,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.henshin.model,
+ sp-model,
+ org.eclipse.xtext.xbase;bundle-version="2.24.0",
+ sp.edit;bundle-version="1.0.0",
+ sp.editor;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
