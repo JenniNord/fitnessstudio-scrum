@@ -88,7 +88,7 @@ public class SPConstraintChecker implements ConstraintChecker {
 					if ((e.getType() != SPPackage.eINSTANCE.getSprint_CommittedItem() && 
 						e.getType() != SPPackage.eINSTANCE.getWorkItem_IsPlannedFor())
 						|| e.getType() != SPPackage.eINSTANCE.getPlan_Sprints()) {
-						System.out.println("Violates constraints");
+						System.out.println("Violates SPConstraintChecker");
 						return true;
 					}
 			}

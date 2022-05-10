@@ -73,7 +73,7 @@ public class LowerNSGAIIManager<S> extends AbstractAlgorithmRunner {
 	            	.execute();
 	    
 	    /* Measure management */
-	   MeasureManager measureManager = ((NSGAIIMeasures<DomainModelSolution<S>>)algorithm).getMeasureManager() ;
+	    MeasureManager measureManager = ((NSGAIIMeasures<DomainModelSolution<S>>)algorithm).getMeasureManager() ;
 	    
 	    DurationMeasure currentComputingTime =
 	            (DurationMeasure) measureManager.<Long>getPullMeasure("currentExecutionTime");
@@ -88,17 +88,17 @@ public class LowerNSGAIIManager<S> extends AbstractAlgorithmRunner {
 	    computingTime = algorithmRunner.getComputingTime();
 	    
 	    printFinalDomainModelSolutionSet(population);
-	    /*
 	    
-	    JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
+	    //JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
 	
-	    printFinalSolutionSet(population);
+	    // Use these for reference pareto front
+	    /*printFinalSolutionSet(population);
 	    if (!referenceParetoFront.equals("")) {
 	      printQualityIndicators(population, referenceParetoFront);
 	    }
-*
+
 	    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix()) ;
-	    plot.plot(); */
+	    plot.plot();*/
 	}
 	
 	public List<DomainModelSolution<S>> getResult() {

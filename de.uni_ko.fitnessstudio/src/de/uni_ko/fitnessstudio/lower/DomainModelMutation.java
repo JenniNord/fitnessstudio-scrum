@@ -63,7 +63,7 @@ public class DomainModelMutation<S> implements MutationOperator<DomainModelSolut
 		
 		if (fixedRules.isEmpty()) {
 			// UpperTierRunner
-			mutateWithGenRules(graph);
+			mutateWithFixedRules(graph); //GenRules
 		} else {
 			// LowerTierRunner
 			if (Math.random() > 0.5) 

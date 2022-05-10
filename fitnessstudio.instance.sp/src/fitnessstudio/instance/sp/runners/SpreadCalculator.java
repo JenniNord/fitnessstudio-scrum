@@ -59,12 +59,12 @@ public class SpreadCalculator {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		List<String> initMethods = Arrays.asList("complete", "empty", "extremes", "rand+x", "random");
-		List<String> models = Arrays.asList("A", "B", "C", "D", "E");
+		List<String> initMethods = Arrays.asList("random");
+		List<String> models = Arrays.asList("A");
 		
 		for (String initMethod : initMethods) {
 			for (String model : models) {
-				final String OUTPUT_PREFIX = "output_models\\" + model + "\\" + initMethod + "-fixed\\"; // either -fixed or -fixedXORgen
+				final String OUTPUT_PREFIX = "output_models\\" + model + "\\21_00_20\\"; // either -fixed or -fixedXORgen
 				String paretoFrontFile = "resource\\ref" + model + ".csv";
 				
 				try (BufferedReader br = new BufferedReader(new FileReader(OUTPUT_PREFIX + "log.txt"))) {

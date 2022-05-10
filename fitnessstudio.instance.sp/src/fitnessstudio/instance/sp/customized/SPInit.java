@@ -27,10 +27,10 @@ public class SPInit extends Init<SPSolution> {
 		//createEmptyPopulation(population, size);
 	    
 		// 1:1 Sprints:WorkItems
-		createRandomPopulation(population, size);
+		//createRandomPopulation(population, size);
 		//createCompletePopulation(population, size);
 		//createExtremesPopulation(population, size);
-		//createRandomWithExtremesPopulation(population, size);
+		createRandomWithExtremesPopulation(population, size);
 		
 		// Blob Sprint, 1 Sprint:All WI
 		//createRandomBlobPopulation(population, size);
@@ -82,20 +82,20 @@ public class SPInit extends Init<SPSolution> {
 	// some work items will get added to the plan with a new sprint
 	private SPSolution createRandomSolution() {
 		SPSolution solution = problem.createSolution();
-		Plan plan = solution.getVariable(0);
+		//Plan plan = solution.getVariable(0);
 		
-		for (int i = 0; i < plan.getBacklog().getWorkitems().size(); i++) {
+		for (int i = 0; i < solution.getVariable(0).getBacklog().getWorkitems().size(); i++) {
 			if (Math.random() > 0.5) {
 				// create sprint
 				Sprint sprint = SPFactory.eINSTANCE.createSprint();
 				
 				// add work item to sprint
-				WorkItem workitem = plan.getBacklog().getWorkitems().get(i);
+				WorkItem workitem = solution.getVariable(0).getBacklog().getWorkitems().get(i);
 				workitem.setIsPlannedFor(sprint);
 				sprint.getCommittedItem().add(workitem);
 				
 				// add sprint to plan
-				plan.getSprints().add(sprint);
+				solution.getVariable(0).getSprints().add(sprint);
 			}
 		}
 		

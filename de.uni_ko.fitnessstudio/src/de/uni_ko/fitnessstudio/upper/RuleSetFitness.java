@@ -59,6 +59,8 @@ public class RuleSetFitness<S> implements Fitness<RuleSet, Double> {
 			
 			return -manager.getHypervolume();
 		} catch (JMetalException | FileNotFoundException | InterruptedException e1) {
+			System.out.println(e1.getClass());
+			System.out.println(e1.getMessage());
 			return -10000.0;
 		}
 	}

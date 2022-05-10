@@ -44,8 +44,8 @@ public class LowerTierRunnerWithFixed {
 	private static String MUTATION_RULES_DIRECTORY = "transformation\\fixed";
 
 	private static int RUNS = 1;//30;//
-	private static int MAX_EVALUATIONS = 500;//5000;150000;//
-	private static int POPULATION_SIZE = 40;//200;//
+	private static int MAX_EVALUATIONS = 150000;//500;5000;150000;//
+	private static int POPULATION_SIZE = 200;//40;//
 	
 	private static GAConfiguration configuration = new GAConfiguration(MAX_EVALUATIONS, POPULATION_SIZE, true);
 
@@ -79,7 +79,7 @@ public class LowerTierRunnerWithFixed {
 			DomainModelProblem problem = new SPProblem(INPUT_MODEL_ID);
 			Init init = new SPInit();
 			DomainModelCrossover crossover = new SPCrossover(0.9);
-			DomainModelMutation mutation = new DomainModelMutation(getGenRules(), getFixedRules(), 0.6);
+			DomainModelMutation mutation = new DomainModelMutation(getGenRules(), new HashSet<Unit>(), 0.6);
 			
 			LowerNSGAIIManager gaManager = new LowerNSGAIIManager(problem, init, crossover, mutation, configuration);
 			gaManager.setPrefix(OUTPUT_PREFIX + i);
@@ -93,8 +93,8 @@ public class LowerTierRunnerWithFixed {
 			long computingTime = gaManager.getComputingTime();
 			
 			// For each run: log i + hypervolume + runtime
-			// System.out.println(i + "\t" + gaManager.getHypervolume() + "\t" + computingTime);
-			createLogEntry(i, gaManager.getHypervolume(), gaManager.getSpread(), computingTime, OUTPUT_PREFIX);
+			//System.out.println(i + "\t" + gaManager.getHypervolume() + "\t" + computingTime);
+			//createLogEntry(i, gaManager.getHypervolume(), gaManager.getSpread(), computingTime, OUTPUT_PREFIX);
 		}
 	}
 

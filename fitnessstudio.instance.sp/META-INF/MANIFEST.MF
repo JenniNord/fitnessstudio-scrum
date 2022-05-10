@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: NrpInstance
+Bundle-Name: SpInstance
 Bundle-SymbolicName: fitnessstudio.instance.sp
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: lib/cra.ttc16_1.0.0.jar

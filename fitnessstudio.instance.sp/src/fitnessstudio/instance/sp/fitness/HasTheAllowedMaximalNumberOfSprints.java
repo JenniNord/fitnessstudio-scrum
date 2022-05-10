@@ -28,12 +28,11 @@ public class HasTheAllowedMaximalNumberOfSprints {
     long nonEmptySprints =
         plan.getSprints().stream().filter(sprint -> sprint.getCommittedItem().size() > 0).count();
 
-    System.out.println("Counted sprints: " + nonEmptySprints);
-    System.out.println("Counted maximal desired sprints: " + desiredSprints);
-
     // If we have less than the minimum number of desired sprints
     // Negative numbers trigger constraint violations in JMetal
     if (nonEmptySprints > desiredSprints) {
+	System.out.println("Counted sprints: " + nonEmptySprints);
+    System.out.println("Counted maximal desired sprints: " + desiredSprints);
       return (desiredSprints - nonEmptySprints) * -1;
     }
 
