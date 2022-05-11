@@ -30,13 +30,13 @@ public class SPInit extends Init<SPSolution> {
 		//createRandomPopulation(population, size);
 		//createCompletePopulation(population, size);
 		//createExtremesPopulation(population, size);
-		createRandomWithExtremesPopulation(population, size);
+		//createRandomWithExtremesPopulation(population, size);
 		
 		// Blob Sprint, 1 Sprint:All WI
 		//createRandomBlobPopulation(population, size);
 		//createCompleteBlobPopulation(population, size);
 		//createExtremesBlobPopulation(population, size);
-		//createRandomWithExtremesBlobPopulation(population, size);
+		createRandomWithExtremesBlobPopulation(population, size);
 	    
 	    return population;
 	}

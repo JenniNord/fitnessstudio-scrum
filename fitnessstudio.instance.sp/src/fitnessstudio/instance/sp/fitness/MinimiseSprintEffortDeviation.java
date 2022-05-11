@@ -23,7 +23,7 @@ public class MinimiseSprintEffortDeviation {
 
     double effortStandardDeviation = new StandardDeviation().evaluate(fitness);
 
-    //System.out.println("Sprint effort distribution: " + fitness);
+    // System.out.println("Sprint effort distribution: " + fitness);
     System.out.println("Sprint effort standard deviation: " + effortStandardDeviation);
 
     return effortStandardDeviation;

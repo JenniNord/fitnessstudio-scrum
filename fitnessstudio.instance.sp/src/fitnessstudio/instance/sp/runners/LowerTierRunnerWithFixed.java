@@ -52,7 +52,7 @@ public class LowerTierRunnerWithFixed {
 	public static void main(String[] args) throws JMetalException, InterruptedException, FileNotFoundException {
 		SPPackage.eINSTANCE.eClass();
 		
-		List<String> models = Arrays.asList("A");
+		List<String> models = Arrays.asList("A", "B");
 		for (String model : models) {
 			runWithModel(model);
 		}
@@ -79,7 +79,7 @@ public class LowerTierRunnerWithFixed {
 			DomainModelProblem problem = new SPProblem(INPUT_MODEL_ID);
 			Init init = new SPInit();
 			DomainModelCrossover crossover = new SPCrossover(0.9);
-			DomainModelMutation mutation = new DomainModelMutation(getGenRules(), new HashSet<Unit>(), 0.6);
+			DomainModelMutation mutation = new DomainModelMutation(getGenRules(), 0.3);
 			
 			LowerNSGAIIManager gaManager = new LowerNSGAIIManager(problem, init, crossover, mutation, configuration);
 			gaManager.setPrefix(OUTPUT_PREFIX + i);
