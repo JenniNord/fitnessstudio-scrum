@@ -1,11 +1,13 @@
 package fitnessstudio.instance.sp.customized;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.model.Edge;
 import org.eclipse.emf.henshin.model.Mapping;
@@ -16,6 +18,11 @@ import de.uni_ko.fitnessstudio.upper.ConstraintChecker;
 import sp.model.sp.SPPackage;
 
 public class SPConstraintChecker implements ConstraintChecker {
+	
+	private static EClass[] fC = { SPPackage.eINSTANCE.getPlan(), 
+			SPPackage.eINSTANCE.getStakeholder(), 
+			SPPackage.eINSTANCE.getBacklog()};
+	private static Set<EClass> fixedClasses = new HashSet<EClass>(Arrays.asList(fC));
 
 	public boolean satisfiesMutationConstraints(Collection<Rule> content) {
 		for (Rule rule : content) {
@@ -47,10 +54,18 @@ public class SPConstraintChecker implements ConstraintChecker {
 			preservedNodesLhs2Rhs.put(m.getOrigin(), m.getImage());
 			preservedNodesRhs2Lhs.put(m.getImage(), m.getOrigin());
 		}
-
-		// May not create or delete nodes
-		if (!deletionNodes.isEmpty() || !creationNodes.isEmpty()) {
-			return true;
+		
+		for (Node n : deletionNodes) {
+			if (fixedClasses.contains(n.getType())) {
+				System.out.println("Violates SPConstraintChecker");
+				return true;
+			}
+		}
+		for (Node n : creationNodes) {
+			if (fixedClasses.contains(n.getType())) {
+				System.out.println("Violates SPConstraintChecker");
+				return true;
+			}
 		}
 		
 		// May not delete node other than WorkItems/Sprints and/or Sprints/Plan
@@ -63,15 +78,7 @@ public class SPConstraintChecker implements ConstraintChecker {
 
 		return false;
 	}
-
-	/**
-	 * Changed line 88-89 for the SP problem
-	 * 
-	 * @author nielsvharten, JenniNord
-	 * @param nodes
-	 * @param graph2graph
-	 * @return
-	 */
+	
 	private static boolean createOrDeleteEdgesViolateConstraints(Set<Node> nodes, Map<Node, Node> graph2graph) {
 		// An edge is <<delete>> or <<create>>:
 		// If its source and target nodes, x1 and x2, are
@@ -85,9 +92,10 @@ public class SPConstraintChecker implements ConstraintChecker {
 				Node y1 = graph2graph.get(x1);
 				Node y2 = graph2graph.get(x2);
 				if (y1 != null && y2 != null && y1.getOutgoing(e.getType(), y2) == null)
-					if ((e.getType() != SPPackage.eINSTANCE.getSprint_CommittedItem() && 
-						e.getType() != SPPackage.eINSTANCE.getWorkItem_IsPlannedFor())
-						|| e.getType() != SPPackage.eINSTANCE.getPlan_Sprints()) {
+					// Allowed edges: plan_sprint, sprint_wi, wi_sprint
+					if (e.getType() != SPPackage.eINSTANCE.getSprint_CommittedItem() && 
+						e.getType() != SPPackage.eINSTANCE.getWorkItem_IsPlannedFor() && 
+						e.getType() != SPPackage.eINSTANCE.getPlan_Sprints()) {
 						System.out.println("Violates SPConstraintChecker");
 						return true;
 					}

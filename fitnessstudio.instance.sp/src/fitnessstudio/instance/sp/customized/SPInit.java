@@ -27,8 +27,8 @@ public class SPInit extends Init<SPSolution> {
 		//createEmptyPopulation(population, size);
 	    
 		// 1:1 Sprints:WorkItems
-		createRandomPopulation(population, size);
-		//createCompletePopulation(population, size);
+		//createRandomPopulation(population, size);
+		createCompletePopulation(population, size);
 		//createExtremesPopulation(population, size);
 		//createRandomWithExtremesPopulation(population, size);
 		

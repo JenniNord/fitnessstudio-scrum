@@ -245,4 +245,68 @@
     <mappings xmi:id="_jW1yIrn8EeyomoCLMO8iyg" origin="_jW1yILn8EeyomoCLMO8iyg" image="_jW1yIbn8EeyomoCLMO8iyg"/>
     <mappings xmi:id="_kJIKsrn8EeyomoCLMO8iyg" origin="_kJIKsLn8EeyomoCLMO8iyg" image="_kJIKsbn8EeyomoCLMO8iyg"/>
   </units>
+  <units xsi:type="henshin:Rule" xmi:id="_Ykj4oNEkEeyaLsza-B76bw" name="removeItemFromSprint">
+    <lhs xmi:id="_Yku3wNEkEeyaLsza-B76bw" name="Lhs">
+      <nodes xmi:id="_bs7-0NEkEeyaLsza-B76bw" outgoing="_gNagYNEkEeyaLsza-B76bw">
+        <type href="../../../sp-model/model/sp.ecore#//Plan"/>
+      </nodes>
+      <nodes xmi:id="_cRbL8NEkEeyaLsza-B76bw" incoming="_gNagYNEkEeyaLsza-B76bw" outgoing="_jFh9ANEkEeyaLsza-B76bw">
+        <type href="../../../sp-model/model/sp.ecore#//Sprint"/>
+      </nodes>
+      <nodes xmi:id="_dqCksNEkEeyaLsza-B76bw" incoming="_jFh9ANEkEeyaLsza-B76bw">
+        <type href="../../../sp-model/model/sp.ecore#//WorkItem"/>
+      </nodes>
+      <edges xmi:id="_gNagYNEkEeyaLsza-B76bw" source="_bs7-0NEkEeyaLsza-B76bw" target="_cRbL8NEkEeyaLsza-B76bw">
+        <type href="../../../sp-model/model/sp.ecore#//Plan/sprints"/>
+      </edges>
+      <edges xmi:id="_jFh9ANEkEeyaLsza-B76bw" source="_cRbL8NEkEeyaLsza-B76bw" target="_dqCksNEkEeyaLsza-B76bw">
+        <type href="../../../sp-model/model/sp.ecore#//Sprint/committedItem"/>
+      </edges>
+      <formula xsi:type="henshin:NestedCondition" xmi:id="_fY1BwNEkEeyaLsza-B76bw">
+        <conclusion xmi:id="_fY1BwdEkEeyaLsza-B76bw">
+          <nodes xmi:id="_fY1BwtEkEeyaLsza-B76bw" outgoing="_gNbHcNEkEeyaLsza-B76bw">
+            <type href="../../../sp-model/model/sp.ecore#//Plan"/>
+          </nodes>
+          <nodes xmi:id="_fY1BxNEkEeyaLsza-B76bw" incoming="_gNbHcNEkEeyaLsza-B76bw _kktQwNEkEeyaLsza-B76bw" outgoing="_jFh9AtEkEeyaLsza-B76bw _lSsYINEkEeyaLsza-B76bw">
+            <type href="../../../sp-model/model/sp.ecore#//Sprint"/>
+          </nodes>
+          <nodes xmi:id="_ctbygNEkEeyaLsza-B76bw" incoming="_lSsYINEkEeyaLsza-B76bw" outgoing="_kktQwNEkEeyaLsza-B76bw">
+            <type href="../../../sp-model/model/sp.ecore#//WorkItem"/>
+          </nodes>
+          <nodes xmi:id="_fY1o0NEkEeyaLsza-B76bw" incoming="_jFh9AtEkEeyaLsza-B76bw">
+            <type href="../../../sp-model/model/sp.ecore#//WorkItem"/>
+          </nodes>
+          <edges xmi:id="_gNbHcNEkEeyaLsza-B76bw" source="_fY1BwtEkEeyaLsza-B76bw" target="_fY1BxNEkEeyaLsza-B76bw">
+            <type href="../../../sp-model/model/sp.ecore#//Plan/sprints"/>
+          </edges>
+          <edges xmi:id="_jFh9AtEkEeyaLsza-B76bw" source="_fY1BxNEkEeyaLsza-B76bw" target="_fY1o0NEkEeyaLsza-B76bw">
+            <type href="../../../sp-model/model/sp.ecore#//Sprint/committedItem"/>
+          </edges>
+          <edges xmi:id="_kktQwNEkEeyaLsza-B76bw" source="_ctbygNEkEeyaLsza-B76bw" target="_fY1BxNEkEeyaLsza-B76bw">
+            <type href="../../../sp-model/model/sp.ecore#//WorkItem/isPlannedFor"/>
+          </edges>
+          <edges xmi:id="_lSsYINEkEeyaLsza-B76bw" source="_fY1BxNEkEeyaLsza-B76bw" target="_ctbygNEkEeyaLsza-B76bw">
+            <type href="../../../sp-model/model/sp.ecore#//Sprint/committedItem"/>
+          </edges>
+        </conclusion>
+        <mappings xmi:id="_fY1Bw9EkEeyaLsza-B76bw" origin="_bs7-0NEkEeyaLsza-B76bw" image="_fY1BwtEkEeyaLsza-B76bw"/>
+        <mappings xmi:id="_fY1BxdEkEeyaLsza-B76bw" origin="_cRbL8NEkEeyaLsza-B76bw" image="_fY1BxNEkEeyaLsza-B76bw"/>
+        <mappings xmi:id="_fY1o0dEkEeyaLsza-B76bw" origin="_dqCksNEkEeyaLsza-B76bw" image="_fY1o0NEkEeyaLsza-B76bw"/>
+      </formula>
+    </lhs>
+    <rhs xmi:id="_Yku3wdEkEeyaLsza-B76bw" name="Rhs">
+      <nodes xmi:id="_bs7-0dEkEeyaLsza-B76bw">
+        <type href="../../../sp-model/model/sp.ecore#//Plan"/>
+      </nodes>
+      <nodes xmi:id="_cRbL8dEkEeyaLsza-B76bw">
+        <type href="../../../sp-model/model/sp.ecore#//Sprint"/>
+      </nodes>
+      <nodes xmi:id="_dqCksdEkEeyaLsza-B76bw">
+        <type href="../../../sp-model/model/sp.ecore#//WorkItem"/>
+      </nodes>
+    </rhs>
+    <mappings xmi:id="_bs7-0tEkEeyaLsza-B76bw" origin="_bs7-0NEkEeyaLsza-B76bw" image="_bs7-0dEkEeyaLsza-B76bw"/>
+    <mappings xmi:id="_cRbL8tEkEeyaLsza-B76bw" origin="_cRbL8NEkEeyaLsza-B76bw" image="_cRbL8dEkEeyaLsza-B76bw"/>
+    <mappings xmi:id="_dqCkstEkEeyaLsza-B76bw" origin="_dqCksNEkEeyaLsza-B76bw" image="_dqCksdEkEeyaLsza-B76bw"/>
+  </units>
 </henshin:Module>

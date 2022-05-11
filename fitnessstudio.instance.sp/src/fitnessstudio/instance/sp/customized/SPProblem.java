@@ -1,5 +1,8 @@
 package fitnessstudio.instance.sp.customized;
 
+import java.util.Arrays;
+
+import org.uma.jmetal.util.ConstraintHandling;
 import org.uma.jmetal.util.checking.Check;
 
 import de.uni_ko.fitnessstudio.lower.DomainModelProblem;
@@ -43,6 +46,8 @@ public class SPProblem extends DomainModelProblem<Plan> {
 		// 0 = no constraint violation
 		solution.setConstraint(0, assigned.computeFitness(solution.getVariable(0)));
 		solution.setConstraint(1, sprints.computeFitness(solution.getVariable(0)));
+		
+		System.out.println(Arrays.stream(solution.getConstraints()).sum());
 	}
 
 	@Override
