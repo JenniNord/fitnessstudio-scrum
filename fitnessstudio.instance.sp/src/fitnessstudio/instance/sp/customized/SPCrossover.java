@@ -64,13 +64,13 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 
 	    // Single Point Crossover
 	    int pivot = generator.nextInt(backlog);
-	    if (!(parents.get(0).getVariable(0).getSprints().isEmpty() && 
-	    		parents.get(1).getVariable(0).getSprints().isEmpty())) {
-	    	if (!(parents.get(0).getVariable(0).getSprints().get(0).getCommittedItem().isEmpty() && 
-		    		parents.get(1).getVariable(0).getSprints().get(0).getCommittedItem().isEmpty())) {
-			    doCrossover(parents.get(0).getVariable(0), parents.get(1).getVariable(0), child1.getVariable(0), pivot);
-			    doCrossover(parents.get(1).getVariable(0), parents.get(0).getVariable(0), child2.getVariable(0), pivot);
-	    	}
+	    if (!parents.get(0).getVariable(0).getSprints().isEmpty() && 
+	    		!parents.get(1).getVariable(0).getSprints().isEmpty()) {
+	    		if (!(parents.get(0).getVariable(0).getSprints().get(0).getCommittedItem().isEmpty() && 
+			    		parents.get(1).getVariable(0).getSprints().get(0).getCommittedItem().isEmpty())) {
+	    			doCrossover(parents.get(0).getVariable(0), parents.get(1).getVariable(0), child1.getVariable(0), pivot);
+	    			doCrossover(parents.get(1).getVariable(0), parents.get(0).getVariable(0), child2.getVariable(0), pivot);
+	    		}
 	    }
 	    
 	    return offspring;
@@ -90,14 +90,6 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 	    	}
 	    	turn = !turn;
 	    }
-	}
-	
-	public WorkItem createWorkItem(WorkItem w) {
-		WorkItem copy = SPFactory.eINSTANCE.createWorkItem();
-		copy.setEffort(w.getEffort());
-		copy.setImportance(w.getImportance());
-		copy.setStakeholder(w.getStakeholder());
-		return copy;
 	}
 	
 	private void moveSelectedSprint(Plan dominant, Plan recessive, Plan child) {
@@ -132,9 +124,9 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 						// if the work item exists in the committed items (to the selected sprint)
 						if (workItemEquals(wi, wii)) {
 							// remove work item from its sprint
-							Sprint s = w.getIsPlannedFor();
+							//Sprint s = w.getIsPlannedFor();
 							wii.setIsPlannedFor(null);
-							s.getCommittedItem().remove(wii);
+							//s.getCommittedItem().remove(wii);
 						}
 					}
 				}	
