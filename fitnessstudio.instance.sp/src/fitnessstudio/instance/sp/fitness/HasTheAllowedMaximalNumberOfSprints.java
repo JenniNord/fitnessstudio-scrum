@@ -14,7 +14,6 @@ public class HasTheAllowedMaximalNumberOfSprints {
             .mapToDouble(workItem -> workItem.getEffort())
             .sum();
 
-    // TODO: remove "magic number"?
     int maximumVelocity = 25;
 
     double desiredSprints = totalEffort / maximumVelocity;
@@ -25,15 +24,14 @@ public class HasTheAllowedMaximalNumberOfSprints {
       desiredSprints = Math.floor(desiredSprints);
     }
 
-    long nonEmptySprints =
-        plan.getSprints().stream().filter(sprint -> sprint.getCommittedItem().size() > 0).count();
+    long nonEmptySprints = plan.getSprints().stream().filter(sprint -> sprint.getCommittedItem().size() > 0).count();
 
     // If we have less than the minimum number of desired sprints
     // Negative numbers trigger constraint violations in JMetal
     if (nonEmptySprints > desiredSprints) {
 		System.out.println("Counted sprints: " + nonEmptySprints);
-	    System.out.println("Counted maximal desired sprints: " + desiredSprints);
-      return (desiredSprints - nonEmptySprints);
+		System.out.println("Counted maximal desired sprints: " + desiredSprints);
+		return (desiredSprints - nonEmptySprints);
     }
 
     return 0;

@@ -15,7 +15,10 @@ import org.eclipse.emf.henshin.model.Node;
 import org.eclipse.emf.henshin.model.Rule;
 
 import de.uni_ko.fitnessstudio.upper.ConstraintChecker;
+import fitnessstudio.instance.sp.fitness.HasTheAllowedMaximalNumberOfSprints;
+import sp.model.sp.Plan;
 import sp.model.sp.SPPackage;
+import sp.model.sp.WorkItem;
 
 public class SPConstraintChecker implements ConstraintChecker {
 	
@@ -106,7 +109,24 @@ public class SPConstraintChecker implements ConstraintChecker {
 	}
 
 	public boolean satisfiesWellformednessConstraint(EObject model) {
-		return true;
+		Plan plan = (Plan) model;
+		boolean violated = false;
+		
+		for (WorkItem wi : plan.getBacklog().getWorkitems()) {
+			if (wi.getIsPlannedFor() == null) {
+				violated = true;
+				System.out.println("Violated wellformedness planned");
+			}
+		}
+		
+		if (new HasTheAllowedMaximalNumberOfSprints().computeFitness(plan) < 0.0) {
+			violated = true;
+			System.out.println("Violated wellformedness sprints");
+		}
+		
+		return !violated;
+		
+		//return true;
 	}
 	
 }
