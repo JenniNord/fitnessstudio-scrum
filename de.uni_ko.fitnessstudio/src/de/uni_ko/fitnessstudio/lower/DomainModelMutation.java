@@ -18,7 +18,6 @@ import org.uma.jmetal.operator.mutation.MutationOperator;
 import org.uma.jmetal.util.checking.Check;
 
 import de.uni_ko.fitnessstudio.util.EngineFactory;
-import sp.model.sp.SPPackage;
 
 @SuppressWarnings("serial")
 public class DomainModelMutation<S> implements MutationOperator<DomainModelSolution<S>> {
@@ -64,13 +63,11 @@ public class DomainModelMutation<S> implements MutationOperator<DomainModelSolut
 		
 		if (fixedRules.isEmpty()) {
 			// UpperTierRunner
-			mutateWithGenRules(graph); //GenRules //FixedRules?
+			mutateWithGenRules(graph);
 		} else {
 			// LowerTierRunner
-			//if (Math.random() > 0.5) 
-				mutateWithFixedRules(graph);
-			//else
-				//mutateWithGenRules(graph);
+			mutateWithFixedRules(graph);
+			// mutateWithGenRules(graph);
 		}
 		
 		graph.clear();
@@ -81,7 +78,6 @@ public class DomainModelMutation<S> implements MutationOperator<DomainModelSolut
 		for (Unit unit : fixedRules) {
 			if (Math.random() < mutationProbability) {
 				UnitApplication app = new UnitApplicationImpl(engine, graph, unit, null);
-				System.out.println("MUTATING");
 				app.execute(null);
 			}
 		}
@@ -91,8 +87,6 @@ public class DomainModelMutation<S> implements MutationOperator<DomainModelSolut
 		for (Rule rule : genRules) {
 			if (Math.random() < mutationProbability) {
 				RuleApplication ruleApp = new RuleApplicationImpl(engine, graph, rule, null);
-				System.out.println("MUTATING");
-				// Missing factory for 'Node :null'. Register the corresponding package, e.g. using PackageName.eINSTANCE.getName()
 				ruleApp.execute(null);
 			}
 		}

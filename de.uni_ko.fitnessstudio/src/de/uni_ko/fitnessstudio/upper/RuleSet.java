@@ -18,8 +18,6 @@ import org.eclipse.emf.henshin.model.resource.HenshinResourceSet;
 
 import com.lagodiuk.Chromosome;
 
-import sp.model.sp.SPPackage;
-
 
 /**
  * Encapsulates a rule set as an individual during evolution.
@@ -68,9 +66,7 @@ public class RuleSet implements Chromosome<RuleSet> {
 		return resource.getContents().get(0);
 	}
 	public static void registerPackage() {
-		// ArchitectureCRAPackage.eINSTANCE.eClass();
 		HenshinPackage.eINSTANCE.eClass();
-		   
 	    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 	    Map<String, Object> m = reg.getExtensionToFactoryMap();
 	    m.put("xmi", new XMIResourceFactoryImpl());
@@ -100,7 +96,6 @@ public class RuleSet implements Chromosome<RuleSet> {
 	public List<RuleSet> crossover(RuleSet anotherChromosome) {
 		return RuleSetCrossover.crossover(this, anotherChromosome);
 	}
-
 
 	public ConstraintChecker getConstraintChecker() {
 		return checker;

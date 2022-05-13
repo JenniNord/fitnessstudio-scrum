@@ -19,6 +19,8 @@ import java.util.stream.Collectors;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.henshin.model.Module;
 import org.eclipse.emf.henshin.model.Rule;
 import org.eclipse.emf.henshin.model.Unit;
@@ -78,8 +80,8 @@ public class LowerTierRunnerWithFixed {
 			
 			DomainModelProblem problem = new SPProblem(INPUT_MODEL_ID);
 			Init init = new SPInit();
-			DomainModelCrossover crossover = new SPCrossover(0.0); //.8//.9
-			DomainModelMutation mutation = new DomainModelMutation(0.9); //.3//.6 //getGenRules(), getFixedMutationRules(), 
+			DomainModelCrossover crossover = new SPCrossover(0.9); //.8//.9
+			DomainModelMutation mutation = new DomainModelMutation(getGenRules(), getFixedRules(), 0.6); //.3//.6
 			
 			LowerNSGAIIManager gaManager = new LowerNSGAIIManager(problem, init, crossover, mutation, configuration);
 			gaManager.setPrefix(OUTPUT_PREFIX + i);
@@ -139,6 +141,7 @@ public class LowerTierRunnerWithFixed {
 	
 	private static Set<Unit> getFixedRules() {
 		HenshinResourceSet resSet = new HenshinResourceSet();
+		
 		Resource resource = resSet.getResource(URI.createURI("..\\de.uni_ko.fitnessstudio\\transformation\\genetic\\mutation.henshin"), true);
 		Module module = (Module) resource.getContents().get(0);
 		

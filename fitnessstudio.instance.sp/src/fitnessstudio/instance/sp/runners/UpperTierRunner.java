@@ -39,7 +39,7 @@ public class UpperTierRunner {
 	private static final Map<String, Double> RULES_WEIGHT = Map.of(
 			"createPreserveEdgesWithNode", 0.2,
 			"createPreserveEdge", 0.2,
-			"createCrOrDelNodeWithContainmentEdge", 0.0,
+			"createCrOrDelNodeWithContainmentEdge", 0.2, // changed
 			"createCrOrDelEdge", 0.9,
 			"createPreserveNodeWithIncomingEdge", 0.2,
 			"createPreserveNodeWithOutgoingEdge", 0.2,
