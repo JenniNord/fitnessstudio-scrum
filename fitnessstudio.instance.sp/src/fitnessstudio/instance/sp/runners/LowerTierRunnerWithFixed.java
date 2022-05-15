@@ -54,7 +54,7 @@ public class LowerTierRunnerWithFixed {
 	public static void main(String[] args) throws JMetalException, InterruptedException, FileNotFoundException {
 		SPPackage.eINSTANCE.eClass();
 		
-		List<String> models = Arrays.asList("A", "B");
+		List<String> models = Arrays.asList("A", "B", "C", "D", "E");
 		for (String model : models) {
 			runWithModel(model);
 		}

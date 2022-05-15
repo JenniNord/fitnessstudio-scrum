@@ -109,7 +109,7 @@ public class SPConstraintChecker implements ConstraintChecker {
 	}
 
 	public boolean satisfiesWellformednessConstraint(EObject model) {
-		Plan plan = (Plan) model;
+		/*Plan plan = (Plan) model;
 		boolean violated = false;
 		
 		for (WorkItem wi : plan.getBacklog().getWorkitems()) {
@@ -124,9 +124,11 @@ public class SPConstraintChecker implements ConstraintChecker {
 			System.out.println("Violated wellformedness sprints");
 		}
 		
-		return !violated;
+		System.out.println("Violated");
 		
-		//return true;
+		return !violated;*/
+		
+		return true;
 	}
 	
 }
