@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.uma.jmetal.problem.Problem;
 import de.uni_ko.fitnessstudio.nsga.Init;
 import de.uni_ko.fitnessstudio.util.ModelIO;
-
+import fitnessstudio.instance.sp.fitness.HasTheAllowedMaximalNumberOfSprints;
 import sp.model.sp.Plan;
 import sp.model.sp.Sprint;
 import sp.model.sp.SPFactory;
@@ -26,10 +26,9 @@ public class SPInit extends Init<SPSolution> {
 		
 		//createEmptyPopulation(population, size);
 	    
-		// 1:1 Sprints:WorkItems
 		//createRandomPopulation(population, size);
-		//createCompletePopulation(population, size);
-		createExtremesPopulation(population, size);
+		createCompletePopulation(population, size);
+		//createExtremesPopulation(population, size);
 		//createRandomWithExtremesPopulation(population, size);
 		
 		// Blob Sprint, 1 Sprint:All WI
@@ -79,45 +78,82 @@ public class SPInit extends Init<SPSolution> {
 		population.add(createCompleteSolution());
 	}
 	
-	// some work items will get added to the plan with a new sprint
+	// some work items will be added to a sprint 
 	private SPSolution createRandomSolution() {
 		SPSolution solution = problem.createSolution();
-		//Plan plan = solution.getVariable(0);
+		int sprintVelocity = 0;
+		int max_velocity = new HasTheAllowedMaximalNumberOfSprints().getMaximumVelocity();
+		Sprint sprint = SPFactory.eINSTANCE.createSprint();
+		solution.getVariable(0).getSprints().add(sprint);
 		
+		// for every work item in the backlog
 		for (int i = 0; i < solution.getVariable(0).getBacklog().getWorkitems().size(); i++) {
 			if (Math.random() > 0.5) {
-				// create sprint
-				Sprint sprint = SPFactory.eINSTANCE.createSprint();
-				
-				// add work item to sprint
-				WorkItem workitem = solution.getVariable(0).getBacklog().getWorkitems().get(i);
-				workitem.setIsPlannedFor(sprint);
-				sprint.getCommittedItem().add(workitem);
-				
-				// add sprint to plan
-				solution.getVariable(0).getSprints().add(sprint);
+				// if the sprint isn't full
+				if (sprintVelocity < max_velocity) {
+					// add work item to sprint
+					WorkItem workitem = solution.getVariable(0).getBacklog().getWorkitems().get(i);
+					workitem.setIsPlannedFor(sprint);
+					sprint.getCommittedItem().add(workitem);
+					// keep track of sprint effort
+					sprintVelocity += workitem.getEffort();
+				} else {
+					sprint = SPFactory.eINSTANCE.createSprint();
+					// add sprint to plan
+					solution.getVariable(0).getSprints().add(sprint);
+					// add work item to sprint
+					WorkItem workitem = solution.getVariable(0).getBacklog().getWorkitems().get(i);
+					workitem.setIsPlannedFor(sprint);
+					sprint.getCommittedItem().add(workitem);
+					// reset/set sprint velocity
+					sprintVelocity = workitem.getEffort();
+				}
 			}
+		}
+		
+		// remove sprint if it's empty
+		if (sprint.getCommittedItem().isEmpty()) {
+			solution.getVariable(0).getSprints().remove(sprint);
 		}
 		
 		return solution;
 	}
 	
-	// all work items gets added to the plan with one sprint each
+	// all work items gets added to the plan in sprints
+	// a new sprint is created when the max velocity is reached
 	private SPSolution createCompleteSolution() {
 		SPSolution solution = problem.createSolution();
-		Plan plan = solution.getVariable(0);
+		int sprintVelocity = 0;
+		int max_velocity = new HasTheAllowedMaximalNumberOfSprints().getMaximumVelocity();
+		Sprint sprint = SPFactory.eINSTANCE.createSprint();
+		solution.getVariable(0).getSprints().add(sprint);
 		
-		for (int i = 0; i < plan.getBacklog().getWorkitems().size(); i++) {
-			// create sprint
-			Sprint sprint = SPFactory.eINSTANCE.createSprint();
-			
-			// add work item to sprint
-			WorkItem workitem = plan.getBacklog().getWorkitems().get(i);
-			workitem.setIsPlannedFor(sprint);
-			sprint.getCommittedItem().add(workitem);
-			
-			// add sprint to plan
-			plan.getSprints().add(sprint);
+		// for every work item in the backlog
+		for (int i = 0; i < solution.getVariable(0).getBacklog().getWorkitems().size(); i++) {
+			// if the sprint isn't full
+			if (sprintVelocity < max_velocity) {
+				// add work item to sprint
+				WorkItem workitem = solution.getVariable(0).getBacklog().getWorkitems().get(i);
+				workitem.setIsPlannedFor(sprint);
+				sprint.getCommittedItem().add(workitem);
+				// keep track of sprint effort
+				sprintVelocity += workitem.getEffort();
+			} else {
+				sprint = SPFactory.eINSTANCE.createSprint();
+				// add sprint to plan
+				solution.getVariable(0).getSprints().add(sprint);
+				// add work item to sprint
+				WorkItem workitem = solution.getVariable(0).getBacklog().getWorkitems().get(i);
+				workitem.setIsPlannedFor(sprint);
+				sprint.getCommittedItem().add(workitem);
+				// reset/set sprint velocity
+				sprintVelocity = workitem.getEffort();
+			}
+		}
+		
+		// remove sprint if it's empty
+		if (sprint.getCommittedItem().isEmpty()) {
+			solution.getVariable(0).getSprints().remove(sprint);
 		}
 		
 		return solution;
