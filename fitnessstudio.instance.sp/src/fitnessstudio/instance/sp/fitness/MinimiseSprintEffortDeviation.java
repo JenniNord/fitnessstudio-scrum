@@ -25,6 +25,10 @@ public class MinimiseSprintEffortDeviation {
 
     // System.out.println("Sprint effort distribution: " + fitness);
     System.out.println("Sprint effort standard deviation: " + effortStandardDeviation);
+    
+    if (Double.isNaN(effortStandardDeviation)) {
+    	System.out.println("Sprints: " + plan.getSprints().size());
+    }
 
     return effortStandardDeviation;
   }

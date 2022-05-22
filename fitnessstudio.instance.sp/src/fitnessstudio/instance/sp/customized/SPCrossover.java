@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.uma.jmetal.util.checking.Check;
 
 import de.uni_ko.fitnessstudio.lower.DomainModelCrossover;
@@ -47,6 +51,17 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 		Check.isNotNull(parents);
 	    Check.that(parents.size() == 2, "There must be 2 parents instead of " + parents.size());
 	    
+	    List<SPSolution> copied_parents1 = new ArrayList<SPSolution>();
+	    List<SPSolution> copied_parents2 = new ArrayList<SPSolution>();
+	    SPSolution parent1 = (SPSolution) parents.get(0).copy();
+		SPSolution parent2 = (SPSolution) parents.get(1).copy();
+		SPSolution parent3 = (SPSolution) parents.get(0).copy();
+		SPSolution parent4 = (SPSolution) parents.get(1).copy();
+		copied_parents1.add(parent1);
+		copied_parents1.add(parent2);
+		copied_parents2.add(parent3);
+		copied_parents2.add(parent4);
+	    
 		List<SPSolution> offspring = new ArrayList<>(2);
 		SPSolution child1 = (SPSolution) parents.get(0).copy();
 		SPSolution child2 = (SPSolution) parents.get(1).copy();
@@ -57,10 +72,10 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 	    if (Math.random() > crossoverProbability)
 	    	return offspring;
 	    
-	    //crossOver(parents, child1);
-	    //crossOver(parents, child2);
-	    
-	    int backlog = parents.get(0).getVariable(0).getBacklog().getWorkitems().size();
+	    crossOver(copied_parents1, offspring.get(0));
+	    crossOver(copied_parents2, offspring.get(1));
+
+	   /* int backlog = parents.get(0).getVariable(0).getBacklog().getWorkitems().size();
 
 	    // Single Point Crossover
 	    int pivot = generator.nextInt(backlog);
@@ -71,8 +86,22 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 	    			doCrossover(parents.get(0).getVariable(0), parents.get(1).getVariable(0), child1.getVariable(0), pivot);
 	    			doCrossover(parents.get(1).getVariable(0), parents.get(0).getVariable(0), child2.getVariable(0), pivot);
 	    		}
-	    }
+	    }*/
 	    
+	    /*System.out.println("Child 1 wi: " + 
+	    offspring.get(0).getVariable(0).getBacklog().getWorkitems().stream()
+	    .filter(w -> w.getIsPlannedFor() == null).collect(Collectors.toList()).size());
+	    System.out.println("Child 2 wi: " + 
+	    offspring.get(1).getVariable(0).getBacklog().getWorkitems().stream()
+	    .filter(w -> w.getIsPlannedFor() == null).collect(Collectors.toList()).size());*/
+	    /*System.out.println("Parent 0 sprints: " + parents.get(0).getVariable(0).getSprints().size());
+	    System.out.println("Parent 0 sprints: " + parents.get(1).getVariable(0).getSprints().size());
+	    System.out.println("Parent 0 copy sprints: " + copied_parents1.get(0).getVariable(0).getSprints().size());
+	    System.out.println("Parent 1 copy sprints: " + copied_parents1.get(1).getVariable(0).getSprints().size());
+	    System.out.println("Child 0 sprints: " + offspring.get(0).getVariable(0).getSprints().size());*/
+	    //System.out.println("Child 2 sprints: " + offspring.get(1).getVariable(0).getSprints().size());
+	    //System.out.println("Child 1 sprints: " + offspring.get(0).getVariable(0).getBacklog().getWorkitems().size());
+	    //System.out.println("Child 2 sprints: " + offspring.get(1).getVariable(0).getBacklog().getWorkitems().size());
 	    return offspring;
 	}
 	
@@ -81,10 +110,13 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 	    child.getVariable(0).getBacklog().getWorkitems().stream().forEach(w -> w.setIsPlannedFor(null));
 	    
 		boolean turn = false;
-		
+		// while both parents have sprints
 	    while (!(parents.get(0).getVariable(0).getSprints().isEmpty() && parents.get(1).getVariable(0).getSprints().isEmpty())) {
+	    	// if turn & parent 0 has sprints
 	    	if (turn && !parents.get(0).getVariable(0).getSprints().isEmpty()) {
 	    		moveSelectedSprint(parents.get(0).getVariable(0), parents.get(1).getVariable(0), child.getVariable(0));
+	    		
+	    		// if !turn & parents 1 has sprints
 	    	} else if (!turn && !parents.get(1).getVariable(0).getSprints().isEmpty()) {
 	    		moveSelectedSprint(parents.get(1).getVariable(0), parents.get(0).getVariable(0), child.getVariable(0));
 	    	}
@@ -103,49 +135,33 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 			Sprint selected = selectSprint(dominant);
 			// Create new sprint for child
 			Sprint selected_ = SPFactory.eINSTANCE.createSprint();
-			// Add new sprint to child
+			// Add new sprint to child plan
 			child.getSprints().add(selected_);
 			
-			// Select all committed work items in selected sprint
-			//EList<WorkItem> committed = selected.getCommittedItem();
+			// Get backlogs
+			EList<WorkItem> backlog = dominant.getBacklog().getWorkitems();
+			EList<WorkItem> recessive_backlog = recessive.getBacklog().getWorkitems();
+			EList<WorkItem> child_backlog = child.getBacklog().getWorkitems();
 			
-			// Add work items from selected sprint to new child sprint
-			// For each work item in child backlog
-			for (WorkItem w : child.getBacklog().getWorkitems()) {
-				for (WorkItem wi : selected.getCommittedItem()) {
-					// if the work item exists in the committed items (to the selected sprint)
-					if (workItemEquals(w, wi)) {
-						// add work item to new sprint
-						w.setIsPlannedFor(selected_);
-						selected_.getCommittedItem().add(w);
-					}
+			// Loop through dominant backlog
+			for (int i = 0; i < backlog.size(); i++) {
+				// If the work item is in the committed items in the selected sprint
+				if (selected.getCommittedItem().contains(backlog.get(i))) {
+					// Add to new sprint in child
+					WorkItem wi = child_backlog.get(i);
+					wi.setIsPlannedFor(selected_);
+					selected_.getCommittedItem().add(wi);
 					
-					for (WorkItem wii : recessive.getBacklog().getWorkitems()) {
-						// if the work item exists in the committed items (to the selected sprint)
-						if (workItemEquals(wi, wii)) {
-							// remove work item from its sprint
-							//Sprint s = w.getIsPlannedFor();
-							wii.setIsPlannedFor(null);
-							//s.getCommittedItem().remove(wii);
-						}
-					}
-				}	
-			}
-			// Remove selected sprint work items from recessive parent sprints
-			// For each work item in the recessive parents backlog
-			/*for (WorkItem w : recessive.getBacklog().getWorkitems()) {
-				
-				//Concurrent modification exception here!
-				for (WorkItem wi : selected.getCommittedItem()) {
-					// if the work item exists in the committed items (to the selected sprint)
-					if (workItemEquals(w, wi)) {
-						// remove work item from its sprint
-						//Sprint s = w.getIsPlannedFor();
-						w.setIsPlannedFor(null);
-						//s.getCommittedItem().remove(w);
+					// Remove work item from recessive sprints
+					WorkItem rwi = recessive_backlog.get(i);
+					Sprint s = rwi.getIsPlannedFor();
+					if (s != null) {
+						rwi.setIsPlannedFor(null);
+						s.getCommittedItem().remove(rwi);
 					}
 				}
-			}*/
+			}
+			
 			// Remove selected sprint from dominant parent
 			dominant.getSprints().remove(selected);
 		}
@@ -157,11 +173,9 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 	private Sprint selectSprint(Plan plan) {
 		return plan.getSprints().get((int) (Math.random() * plan.getSprints().size()));
 	}
-	
-	// Moves a sprint from parent to child
-	// Create a sprint in child & move work items from parent sprint to child sprint?
+
 	public void doCrossover(Plan parent1, Plan parent2, Plan child, int pivot) {
-		// Clear clear the first sprint from child
+		// Clear the child's first sprint from work items
 		child.getSprints().get(0).getCommittedItem().clear();
 		
 		int n = 0;
@@ -192,7 +206,6 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 	
 	private boolean workItemEquals(WorkItem wiA, WorkItem wiB) {
 		return ((wiA.getEffort() == wiB.getEffort()) && 
-				(wiA.getImportance() == wiB.getImportance()) && 
-				(wiA.getStakeholder() == wiB.getStakeholder()));
+				(wiA.getImportance() == wiB.getImportance()));
 	}
 }

@@ -80,7 +80,7 @@ public class LowerTierRunnerWithFixed {
 			
 			DomainModelProblem problem = new SPProblem(INPUT_MODEL_ID);
 			Init init = new SPInit();
-			DomainModelCrossover crossover = new SPCrossover(0.9); //.8//.9
+			DomainModelCrossover crossover = new SPCrossover(0.8); //.8//.9
 			DomainModelMutation mutation = new DomainModelMutation(getGenRules(), getFixedRules(), 0.6); //.3//.6
 			
 			LowerNSGAIIManager gaManager = new LowerNSGAIIManager(problem, init, crossover, mutation, configuration);

@@ -90,8 +90,7 @@ public class LowerNSGAIIManager<S> extends AbstractAlgorithmRunner {
 	    printFinalDomainModelSolutionSet(population);
 	    
 	    //JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-	
-	    // Use these for reference pareto front
+
 	    /*printFinalSolutionSet(population);
 	    if (!referenceParetoFront.equals("")) {
 	      printQualityIndicators(population, referenceParetoFront);
