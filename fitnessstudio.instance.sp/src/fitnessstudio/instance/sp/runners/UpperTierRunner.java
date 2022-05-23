@@ -29,11 +29,11 @@ public class UpperTierRunner {
 	private static String OUTPUT_PREFIX = "output_rules\\" + INPUT_MODEL_ID + "\\"
 			+ new SimpleDateFormat("HH_mm_ss").format(Calendar.getInstance().getTime()).toString() + "\\";
 
-	private static int UPPER_TIER_ITERATIONS = 15; //30?
-	private static int UPPER_TIER_POPULATION_SIZE = 60;
-	private static int LOWER_TIER_MAX_EVALUATIONS = 200;
-	private static int LOWER_TIER_POPULATION_SIZE = 8;
-	private static int RUNS = 1; //5; 30
+	private static int UPPER_TIER_ITERATIONS = 15; //40 CRA, 15 NRP
+	private static int UPPER_TIER_POPULATION_SIZE = 60; // 20 CRA, 60 NRP
+	private static int LOWER_TIER_MAX_EVALUATIONS = 300; // 20 CRA, 200 NRP
+	private static int LOWER_TIER_POPULATION_SIZE = 8; // 2 CRA, 8 NRP
+	private static int RUNS = 1; // 5, 30 CRA, 5 NRP
 	private static int TIMEOUT = 180;
 	
 	private static final Map<String, Double> RULES_WEIGHT = Map.of(

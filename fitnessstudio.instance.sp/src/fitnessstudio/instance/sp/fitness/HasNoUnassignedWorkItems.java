@@ -14,7 +14,7 @@ public class HasNoUnassignedWorkItems {
 	        .filter(wi -> wi.getIsPlannedFor() == null)
 	        .count();
 
-    System.out.println("Unassigned backlog work items: " + unassignedWorkItems);
+    //System.out.println("Unassigned backlog work items: " + unassignedWorkItems);
 
     // Negative numbers trigger constraint violations in JMetal
     return unassignedWorkItems * -1;

@@ -39,11 +39,11 @@ public class MinimiseCustomerSatisfactionIndex {
     double importanceStandardDeviation = standardDeviationCalculator.evaluate(stakeholderImportanceSprintDeviation);
 
     // System.out.println("Sprint stakeholder importance distribution: " + stakeholderImportanceSprintDeviation);
-    System.out.println("Sprint Customer Satisfaction Index: " + importanceStandardDeviation);
+    //System.out.println("Sprint Customer Satisfaction Index: " + importanceStandardDeviation);
     
-    if (Double.isNaN(importanceStandardDeviation)) {
+    /*if (Double.isNaN(importanceStandardDeviation)) {
     	System.out.println("Sprints: " + plan.getSprints().size());
-    }
+    }*/
 
     return importanceStandardDeviation;
   }

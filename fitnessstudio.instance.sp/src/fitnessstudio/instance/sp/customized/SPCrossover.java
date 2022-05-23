@@ -1,16 +1,10 @@
 package fitnessstudio.instance.sp.customized;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.uma.jmetal.util.checking.Check;
 
 import de.uni_ko.fitnessstudio.lower.DomainModelCrossover;
@@ -24,7 +18,6 @@ import sp.model.sp.WorkItem;
 public class SPCrossover implements DomainModelCrossover<SPSolution> {
 
 	private double crossoverProbability;
-	private Random generator = new Random();
 	
 	/** Constructor */
 	public SPCrossover(double probability) {
@@ -75,33 +68,6 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 	    crossOver(copied_parents1, offspring.get(0));
 	    crossOver(copied_parents2, offspring.get(1));
 
-	   /* int backlog = parents.get(0).getVariable(0).getBacklog().getWorkitems().size();
-
-	    // Single Point Crossover
-	    int pivot = generator.nextInt(backlog);
-	    if (!parents.get(0).getVariable(0).getSprints().isEmpty() && 
-	    		!parents.get(1).getVariable(0).getSprints().isEmpty()) {
-	    		if (!(parents.get(0).getVariable(0).getSprints().get(0).getCommittedItem().isEmpty() && 
-			    		parents.get(1).getVariable(0).getSprints().get(0).getCommittedItem().isEmpty())) {
-	    			doCrossover(parents.get(0).getVariable(0), parents.get(1).getVariable(0), child1.getVariable(0), pivot);
-	    			doCrossover(parents.get(1).getVariable(0), parents.get(0).getVariable(0), child2.getVariable(0), pivot);
-	    		}
-	    }*/
-	    
-	    /*System.out.println("Child 1 wi: " + 
-	    offspring.get(0).getVariable(0).getBacklog().getWorkitems().stream()
-	    .filter(w -> w.getIsPlannedFor() == null).collect(Collectors.toList()).size());
-	    System.out.println("Child 2 wi: " + 
-	    offspring.get(1).getVariable(0).getBacklog().getWorkitems().stream()
-	    .filter(w -> w.getIsPlannedFor() == null).collect(Collectors.toList()).size());*/
-	    /*System.out.println("Parent 0 sprints: " + parents.get(0).getVariable(0).getSprints().size());
-	    System.out.println("Parent 0 sprints: " + parents.get(1).getVariable(0).getSprints().size());
-	    System.out.println("Parent 0 copy sprints: " + copied_parents1.get(0).getVariable(0).getSprints().size());
-	    System.out.println("Parent 1 copy sprints: " + copied_parents1.get(1).getVariable(0).getSprints().size());
-	    System.out.println("Child 0 sprints: " + offspring.get(0).getVariable(0).getSprints().size());*/
-	    //System.out.println("Child 2 sprints: " + offspring.get(1).getVariable(0).getSprints().size());
-	    //System.out.println("Child 1 sprints: " + offspring.get(0).getVariable(0).getBacklog().getWorkitems().size());
-	    //System.out.println("Child 2 sprints: " + offspring.get(1).getVariable(0).getBacklog().getWorkitems().size());
 	    return offspring;
 	}
 	
@@ -174,38 +140,4 @@ public class SPCrossover implements DomainModelCrossover<SPSolution> {
 		return plan.getSprints().get((int) (Math.random() * plan.getSprints().size()));
 	}
 
-	public void doCrossover(Plan parent1, Plan parent2, Plan child, int pivot) {
-		// Clear the child's first sprint from work items
-		child.getSprints().get(0).getCommittedItem().clear();
-		
-		int n = 0;
-		for (WorkItem workitem : child.getBacklog().getWorkitems()) {
-			// Set child work item as unplanned
-			workitem.setIsPlannedFor(null);
-			
-			if (n < pivot) {
-				for (WorkItem p1_workitem : parent1.getSprints().get(0).getCommittedItem()) {
-					if (workItemEquals(workitem, p1_workitem)) {
-						workitem.setIsPlannedFor(child.getSprints().get(0));
-						child.getSprints().get(0).getCommittedItem().add(workitem);
-						break;
-					}
-				}
-			} else {
-				for (WorkItem p2_workitem : parent2.getSprints().get(0).getCommittedItem()) {
-					if (workItemEquals(workitem, p2_workitem)) {
-						workitem.setIsPlannedFor(child.getSprints().get(0));
-						child.getSprints().get(0).getCommittedItem().add(workitem);
-						break;
-					}
-				}
-			}
-			n++;
-		}
-	}
-	
-	private boolean workItemEquals(WorkItem wiA, WorkItem wiB) {
-		return ((wiA.getEffort() == wiB.getEffort()) && 
-				(wiA.getImportance() == wiB.getImportance()));
-	}
 }
