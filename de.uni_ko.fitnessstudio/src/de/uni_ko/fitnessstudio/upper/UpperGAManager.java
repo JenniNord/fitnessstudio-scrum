@@ -2,6 +2,7 @@ package de.uni_ko.fitnessstudio.upper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
@@ -68,9 +69,11 @@ public class UpperGAManager<S> {
 		ga.getPopulation().trim(0);
 		ga.clearCache();
 		time = System.currentTimeMillis();
-		if (best == null || !constraintChecker.satisfiesMutationConstraints(best.getGenRules()))
+		
+		if (best == null || !constraintChecker.satisfiesMutationConstraints(best.getGenRules())) {
+			System.out.println("Best is null or does not satisfy mutation constraints");
 			return -10000.0;
-		else
+		} else
 			return fitnessVal;
 	}
 

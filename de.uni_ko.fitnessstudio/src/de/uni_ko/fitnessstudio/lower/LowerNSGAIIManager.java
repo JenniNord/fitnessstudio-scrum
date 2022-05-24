@@ -15,6 +15,7 @@ import org.uma.jmetal.qualityindicator.impl.NormalizedHypervolume;
 import org.uma.jmetal.qualityindicator.impl.Spread;
 import org.uma.jmetal.util.AbstractAlgorithmRunner;
 import org.uma.jmetal.util.JMetalException;
+import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.RankingAndCrowdingDistanceComparator;
 import org.uma.jmetal.util.fileoutput.SolutionListOutput;
 import org.uma.jmetal.util.fileoutput.impl.DefaultFileOutputContext;
@@ -94,10 +95,10 @@ public class LowerNSGAIIManager<S> extends AbstractAlgorithmRunner {
 	    /*printFinalSolutionSet(population);
 	    if (!referenceParetoFront.equals("")) {
 	      printQualityIndicators(population, referenceParetoFront);
-	    }
+	    }*/
 
-	    PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix()) ;
-	    plot.plot();*/
+	    //PlotFront plot = new PlotSmile(new ArrayFront(population).getMatrix()) ;
+	    //plot.plot();
 	}
 	
 	public List<DomainModelSolution<S>> getResult() {
@@ -110,14 +111,16 @@ public class LowerNSGAIIManager<S> extends AbstractAlgorithmRunner {
 	
 	public double getHypervolume() throws FileNotFoundException {
 		Front referenceFront = new ArrayFront(referenceParetoFront);
-	    FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront) ;
-
-	    Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront) ;
-	    Front normalizedFront = frontNormalizer.normalize(new ArrayFront(algorithm.getResult())) ;
-	    List<PointSolution> normalizedPopulation = FrontUtils
-	        .convertFrontToSolutionList(normalizedFront) ;
+	    FrontNormalizer frontNormalizer = new FrontNormalizer(referenceFront);
 	    
-	    return new NormalizedHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
+	    Front normalizedReferenceFront = frontNormalizer.normalize(referenceFront);
+	    Front normalizedFront = frontNormalizer.normalize(new ArrayFront(algorithm.getResult()));
+	    List<PointSolution> normalizedPopulation = FrontUtils.convertFrontToSolutionList(normalizedFront);
+	    
+	    Double res = new NormalizedHypervolume<PointSolution>(normalizedReferenceFront).evaluate(normalizedPopulation);
+	    System.out.println("Hypervolume: " + res);
+	    
+	    return res;
 	}
 	
 	public double getSpread() throws FileNotFoundException {

@@ -34,8 +34,8 @@ public class RuleSetCrossover {
 			counter++;
 		}
 		
-		result.add(new RuleSet(set1, one.getFixedRules(), one.getMetaModel(), one.getConstraintChecker(), one.getRulesWeight()));
-		result.add(new RuleSet(set2, one.getFixedRules(), one.getMetaModel(), one.getConstraintChecker(), one.getRulesWeight()));
+		result.add(new RuleSet(set1, one.getMetaModel(), one.getConstraintChecker(), one.getRulesWeight()));
+		result.add(new RuleSet(set2, one.getMetaModel(), one.getConstraintChecker(), one.getRulesWeight()));
 		
 		return result;
 	}

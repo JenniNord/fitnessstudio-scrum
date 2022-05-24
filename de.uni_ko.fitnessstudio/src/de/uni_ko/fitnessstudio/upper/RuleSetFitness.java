@@ -1,6 +1,7 @@
 package de.uni_ko.fitnessstudio.upper;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.uma.jmetal.util.JMetalException;
@@ -45,6 +46,7 @@ public class RuleSetFitness<S> implements Fitness<RuleSet, Double> {
 	public Double calculate(RuleSet chromosome) {
 		if (chromosome.getConstraintChecker().satisfiesMutationConstraints(chromosome.getGenRules())) {
 			DomainModelMutation<S> domainModelMutation = new DomainModelMutation<S>(chromosome.getGenRules(), 0.6);
+			
 			return getResultWithTimeout(domainModelMutation);
 		} else {
 			System.out.println("Violates DomainNameConstraintChecker");

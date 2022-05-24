@@ -24,7 +24,7 @@ public class SPConstraintChecker implements ConstraintChecker {
 	
 	private static EClass[] fC = { SPPackage.eINSTANCE.getPlan(), 
 			SPPackage.eINSTANCE.getStakeholder(), 
-			SPPackage.eINSTANCE.getBacklog()};
+			SPPackage.eINSTANCE.getBacklog() };
 	private static Set<EClass> fixedClasses = new HashSet<EClass>(Arrays.asList(fC));
 
 	public boolean satisfiesMutationConstraints(Collection<Rule> content) {
@@ -99,7 +99,7 @@ public class SPConstraintChecker implements ConstraintChecker {
 					if (e.getType() != SPPackage.eINSTANCE.getSprint_CommittedItem() && 
 						e.getType() != SPPackage.eINSTANCE.getWorkItem_IsPlannedFor() && 
 						e.getType() != SPPackage.eINSTANCE.getPlan_Sprints()) {
-						System.out.println("Violates SPConstraintChecker");
+						System.out.println("Unallowed edge");
 						return true;
 					}
 			}

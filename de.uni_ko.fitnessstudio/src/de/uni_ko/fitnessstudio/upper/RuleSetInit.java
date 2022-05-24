@@ -42,7 +42,6 @@ public class RuleSetInit {
 		initInitializationRules();
 
 		int ruleSetSize = 4;
-		Set<Unit> fixedRules = new HashSet<>();
 		
 		GAPopulation<RuleSet> result = new GAPopulation<RuleSet>();
 		for (int i = 0; i < populationSize; i++) {
@@ -52,9 +51,8 @@ public class RuleSetInit {
 				applyFirstRule(initialRule, metaModel);
 				rules.add(initialRule);
 			}
-			result.addChromosome(RuleSetMutator.mutate(new RuleSet(rules, fixedRules, metaModel, checker, rulesWeight), metaModel));
+			result.addChromosome(RuleSetMutator.mutate(new RuleSet(rules, metaModel, checker, rulesWeight), metaModel));
 		}
-		System.out.println("INITIALIZED POPULATION");
 		return result;
 	}
 

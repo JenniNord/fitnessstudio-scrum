@@ -102,7 +102,7 @@ public class RuleSetMutator {
 	private static RuleSet copyRuleSet(RuleSet myRuleSet) {
 		Set<Rule> rules = new HashSet<Rule>();
 		myRuleSet.getGenRules().stream().forEach(r -> rules.add(EcoreUtil.copy(r)));
-		return new RuleSet(rules, myRuleSet.getFixedRules(), myRuleSet.getMetaModel(), myRuleSet.getConstraintChecker(), myRuleSet.getRulesWeight());
+		return new RuleSet(rules, myRuleSet.getMetaModel(), myRuleSet.getConstraintChecker(), myRuleSet.getRulesWeight());
 	}
 
 	public static void initMutationRules() {

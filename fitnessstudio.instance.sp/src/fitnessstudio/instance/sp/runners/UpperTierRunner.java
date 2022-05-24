@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
@@ -13,6 +14,7 @@ import org.eclipse.emf.ecore.EPackage;
 import sp.model.sp.*;
 import de.uni_ko.fitnessstudio.lower.DomainModelCrossover;
 import de.uni_ko.fitnessstudio.lower.DomainModelProblem;
+import de.uni_ko.fitnessstudio.lower.DomainModelSolution;
 import de.uni_ko.fitnessstudio.nsga.Init;
 import de.uni_ko.fitnessstudio.upper.UpperGAManager;
 import de.uni_ko.fitnessstudio.util.GAConfiguration;
@@ -30,21 +32,21 @@ public class UpperTierRunner {
 			+ new SimpleDateFormat("HH_mm_ss").format(Calendar.getInstance().getTime()).toString() + "\\";
 
 	private static int UPPER_TIER_ITERATIONS = 15; //40 CRA, 15 NRP
-	private static int UPPER_TIER_POPULATION_SIZE = 60; // 20 CRA, 60 NRP
-	private static int LOWER_TIER_MAX_EVALUATIONS = 300; // 20 CRA, 200 NRP
+	private static int UPPER_TIER_POPULATION_SIZE = 20; // 20 CRA, 60 NRP
+	private static int LOWER_TIER_MAX_EVALUATIONS = 200; // 20 CRA, 200 NRP
 	private static int LOWER_TIER_POPULATION_SIZE = 8; // 2 CRA, 8 NRP
 	private static int RUNS = 1; // 5, 30 CRA, 5 NRP
 	private static int TIMEOUT = 180;
 	
 	private static final Map<String, Double> RULES_WEIGHT = Map.of(
-			"createPreserveEdgesWithNode", 0.2,
-			"createPreserveEdge", 0.2,
-			"createCrOrDelNodeWithContainmentEdge", 0.2, // changed
+			"createPreserveEdgesWithNode", 0.5,
+			"createPreserveEdge", 0.5,
+			"createCrOrDelNodeWithContainmentEdge", 0.9, // changed
 			"createCrOrDelEdge", 0.9,
-			"createPreserveNodeWithIncomingEdge", 0.2,
-			"createPreserveNodeWithOutgoingEdge", 0.2,
-			"addNAC", 0.2,
-			"addNAC2", 0.2,
+			"createPreserveNodeWithIncomingEdge", 0.5,
+			"createPreserveNodeWithOutgoingEdge", 0.5,
+			"addNAC", 0.5,
+			"addNAC2", 0.5,
 			"CreateMultiRuleWithMappedPreserveNode", 0.2
 		);
 	

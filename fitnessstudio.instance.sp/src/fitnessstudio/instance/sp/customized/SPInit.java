@@ -24,8 +24,8 @@ public class SPInit extends Init<SPSolution> {
 		List<SPSolution> population = new ArrayList<>(size);
 		
 		//createEmptyPopulation(population, size); //no
-		createRandomPopulation(population, size);
-		//createCompletePopulation(population, size); //no
+		//createRandomPopulation(population, size);
+		createCompletePopulation(population, size); //no
 		//createExtremesPopulation(population, size); //no
 		//createRandomWithExtremesPopulation(population, size); //no
 	    

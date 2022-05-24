@@ -18,6 +18,8 @@ import org.eclipse.emf.henshin.model.resource.HenshinResourceSet;
 
 import com.lagodiuk.Chromosome;
 
+import sp.model.sp.SPPackage;
+
 
 /**
  * Encapsulates a rule set as an individual during evolution.
@@ -25,17 +27,15 @@ import com.lagodiuk.Chromosome;
  *
  */
 public class RuleSet implements Chromosome<RuleSet> {
-	Set<Unit> fixedRules;
 	Set<Rule> genRules;
 	ConstraintChecker checker;
 	EPackage metaModel;
 	
 	private Map<String, Double> rulesWeight;
 
-	public RuleSet(Set<Rule> genRules, Set<Unit> fixedRules, EPackage metaModel, ConstraintChecker checker, Map<String, Double> rulesWeight) {
+	public RuleSet(Set<Rule> genRules, EPackage metaModel, ConstraintChecker checker, Map<String, Double> rulesWeight) {
 		super();
 		this.genRules = genRules;
-		this.fixedRules = fixedRules;
 		this.metaModel = metaModel;
 		this.checker = checker;
 		this.rulesWeight = rulesWeight;
@@ -67,6 +67,7 @@ public class RuleSet implements Chromosome<RuleSet> {
 	}
 	public static void registerPackage() {
 		HenshinPackage.eINSTANCE.eClass();
+		SPPackage.eINSTANCE.eClass();
 	    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 	    Map<String, Object> m = reg.getExtensionToFactoryMap();
 	    m.put("xmi", new XMIResourceFactoryImpl());
@@ -74,13 +75,8 @@ public class RuleSet implements Chromosome<RuleSet> {
 
 	public Set<Unit> getAllRules() {
 		Set<Unit> allRules = new HashSet<>(getGenRules());
-		allRules.addAll(fixedRules);
 		
 		return allRules;
-	}
-	
-	public Set<Unit> getFixedRules() {
-		return fixedRules;
 	}
 	
 	public Set<Rule> getGenRules() {
@@ -103,10 +99,6 @@ public class RuleSet implements Chromosome<RuleSet> {
 
 	public void setChecker(ConstraintChecker checker) {
 		this.checker = checker;
-	}
-
-	public void setFixedRules(Set<Unit> fixedRules) {
-		this.fixedRules = fixedRules;
 	}
 	
 	public void setGenRules(Set<Rule> genRules) {
